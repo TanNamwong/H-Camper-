@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CampMaster Pro</title>
+<meta name="theme-color" content="#1f4d36">
+<meta name="description" content="แอปสายแคมป์ปิ้ง: ลานกางเต็นท์ อากาศ จัดของ คำนวณไฟ SOS">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CampMaster">
+<style>
+:root{--g:#1f4d36;--gd:#123524;--gl:#e6efe2;--cream:#fbf7ec;--gold:#c9a227;--sun:#f2c94c;--or:#e07a2f;--ink:#22301f;--mut:#6b7566;--line:#e4dcc4;--r:16px}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:"Noto Sans Thai","Sarabun",system-ui,sans-serif;background:var(--cream);color:var(--ink);font-size:15px;line-height:1.5;padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.sm{width:16px;height:16px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+header{background:linear-gradient(180deg,var(--gd),var(--g));color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 0;position:sticky;top:0;z-index:30}
+.hrow{display:flex;align-items:center;gap:10px;padding-bottom:6px}
+.logo{width:38px;height:38px;border-radius:12px;background:var(--sun);color:var(--gd);display:grid;place-items:center}
+.hrow h1{font-size:19px;font-weight:700;line-height:1.1}
+.hrow small{display:block;font-size:11px;color:#cfe0c8;font-weight:400}
+.sp{flex:1}
+.chip{font-size:11px;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--sun)}
+.dot.ok{background:#7bd88f}
+.ibtn{background:rgba(255,255,255,.14);color:#fff;width:38px;height:38px;border-radius:12px;display:grid;place-items:center}
+.ridge{display:block;width:calc(100% + 32px);margin:0 -16px;height:18px;color:var(--cream)}
+main{max-width:760px;margin:0 auto;padding:14px 16px}
+section{display:none}section.on{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+h2{font-size:17px;margin-bottom:2px}
+.sub{font-size:12.5px;color:var(--mut)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+label{font-size:12px;font-weight:600;color:var(--mut);display:block;margin-bottom:3px}
+input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--cream);font-size:14px}
+.btn{padding:10px 14px;border-radius:12px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+.b1{background:var(--g);color:#fff}.b2{background:var(--or);color:#fff}.b3{background:var(--gl);color:var(--g)}.b4{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;gap:8px;align-items:center}.wrap{flex-wrap:wrap}
+.tag{font-size:11.5px;background:var(--gl);color:var(--g);padding:2px 9px;border-radius:99px}
+.tag.go{background:#fbf0c9;color:#7a5d00}
+.camp .ban{height:92px;border-radius:12px;background:linear-gradient(135deg,var(--g),#4d8a4f 60%,var(--sun));color:rgba(255,255,255,.9);display:flex;align-items:flex-end;justify-content:space-between;padding:8px 10px;margin-bottom:10px;position:relative}
+.camp .ban .ic{width:46px;height:46px;opacity:.9}
+.dist{background:rgba(0,0,0,.28);color:#fff;font-size:12px;padding:2px 9px;border-radius:99px}
+.fav{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.9);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#aaa}
+.fav.on{color:var(--or)}.fav.on .ic{fill:var(--or)}
+.camp h3{font-size:15.5px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.stat{border-radius:14px;padding:12px;background:var(--gl)}
+.stat.w{background:#fbf0c9}.stat.o{background:#fde3cf}
+.stat b{font-size:26px;display:block;line-height:1.2}
+.stat span{font-size:12px;color:var(--mut)}
+.day{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.day:last-child{border:0}
+.pbar{height:10px;background:var(--gl);border-radius:9px;overflow:hidden;margin:8px 0 4px}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--sun));width:0;transition:width .3s}
+.item{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;margin-bottom:6px;background:#fff}
+.item input{width:20px;height:20px;accent-color:var(--g);padding:0}
+.item span{flex:1;font-size:14px}.item.done span{text-decoration:line-through;color:#a3a99c}
+.item button{background:none;color:#b5b0a0}
+.result{text-align:center;background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;border-radius:var(--r);padding:18px}
+.result b{font-size:34px;display:block;color:var(--sun)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips button{background:var(--gl);color:var(--g);padding:6px 11px;border-radius:99px;font-size:13px}
+.sos{background:#fff3ea;border-color:#f3c9a6}
+.coord{font-family:ui-monospace,monospace;font-size:14px;font-weight:700;word-break:break-all}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:30}
+nav button{flex:1;background:none;padding:8px 2px 7px;color:var(--mut);font-size:11.5px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button.on{color:var(--g);font-weight:700}
+nav button.on .ic{stroke:var(--or)}
+nav button.sosb{color:#c2410c}
+.banner{position:fixed;left:12px;right:12px;bottom:calc(88px + env(safe-area-inset-bottom));max-width:736px;margin:0 auto;background:var(--gd);color:#fff;border-radius:16px;padding:12px 14px;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none;gap:10px;align-items:center}
+.banner.show{display:flex}.banner p{flex:1;font-size:13.5px}.banner .btn{padding:8px 12px}
+dialog{border:0;border-radius:20px;padding:18px;width:min(92vw,460px);background:var(--cream);color:var(--ink)}
+dialog::backdrop{background:rgba(18,53,36,.55)}
+.menuit{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:#fff;border:1px solid var(--line);padding:12px;border-radius:14px;margin-bottom:8px}
+#flash{position:fixed;inset:0;z-index:99;display:none;animation:fl .35s steps(1) infinite;align-items:center;justify-content:center;font-weight:800;font-size:22px}
+@keyframes fl{0%{background:#fff;color:#000}50%{background:#e11d2e;color:#fff}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-tent" viewBox="0 0 24 24"><path d="M3 20 12 4l9 16H3zM12 4v16M9 20l3-6 3 6"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3zM12 10v5M12 18h.01"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11 21 3l-8 18-2-8-8-2z"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-ref" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
+
+<header>
+  <div class="hrow">
+    <div class="logo"><svg class="ic"><use href="#i-tent"/></svg></div>
+    <h1>CampMaster Pro<small>คู่หูสายแคมป์ปิ้ง</small></h1>
+    <div class="sp"></div>
+    <span class="chip"><i class="dot" id="gdot"></i><span id="gtxt">หา GPS...</span></span>
+    <button class="ibtn" onclick="openMenu()" aria-label="เมนู"><svg class="ic"><use href="#i-menu"/></svg></button>
+  </div>
+  <svg class="ridge" viewBox="0 0 400 18" preserveAspectRatio="none"><path fill="currentColor" d="M0 18V12l40-8 36 9 52-11 60 12 56-10 70 11 46-8 40 7v4z"/></svg>
+</header>
+
+<main>
+<section id="s-camp" class="on">
+  <div class="card">
+    <div class="row"><div style="flex:1"><h2>ลานกางเต็นท์</h2><p class="sub" id="cnt"></p></div>
+    <button class="btn b3" onclick="openAdd()"><svg class="ic sm"><use href="#i-plus"/></svg>เพิ่มลาน</button></div>
+    <input id="kw" placeholder="ค้นหาชื่อลาน หรือจังหวัด" oninput="renderCamps()" style="margin:10px 0 8px">
+    <div class="grid2">
+      <div><label>สัญญาณ</label><select id="fsig" onchange="renderCamps()"><option value="all">ทั้งหมด</option><option value="AIS">AIS เด่น</option><option value="TRUE">TRUE/DTAC เด่น</option><option value="ALL">มีทุกค่าย</option></select></div>
+      <div><label>รถที่เข้าได้</label><select id="fveh" onchange="renderCamps()"><option value="all">ทั้งหมด</option><option value="Sedan">รถเก๋งเข้าได้</option><option value="4WD">ต้องใช้ 4WD</option></select></div>
+      <div><label>จุดต่อไฟ</label><select id="fpow" onchange="renderCamps()"><option value="all">ทั้งหมด</option><option value="yes">มี</option><option value="no">ไม่มี</option></select></div>
+      <div><label>สัตว์เลี้ยง</label><select id="fpet" onchange="renderCamps()"><option value="all">ทั้งหมด</option><option value="yes">เข้าได้</option></select></div>
+    </div>
+    <div class="chips"><button id="sortb" onclick="toggleSort()">เรียงตามระยะใกล้ฉัน: เปิด</button><button id="favb" onclick="toggleFavOnly()">เฉพาะที่ชอบ</button></div>
+  </div>
+  <div id="camps"></div>
+  <p class="sub" style="text-align:center">ข้อมูลลานเป็นข้อมูลอ้างอิง โปรดตรวจสอบค่าธรรมเนียมและการจองกับอุทยาน/ลานก่อนเดินทาง</p>
+</section>
+
+<section id="s-wx">
+  <div class="card">
+    <div class="row"><div style="flex:1"><h2>พยากรณ์อากาศ</h2><p class="sub" id="wloc">ตำแหน่งของคุณ</p></div>
+    <button class="btn b1" onclick="loadWx()"><svg class="ic sm"><use href="#i-ref"/></svg>อัปเดต</button></div>
+    <p class="sub" id="wupd" style="margin-top:6px"></p>
+    <div class="stats">
+      <div class="stat"><span>อุณหภูมิตอนนี้</span><b id="wt">--°C</b><span id="wta"></span></div>
+      <div class="stat w"><span>ลมกระโชก</span><b id="ww">--</b><span id="wwa"></span></div>
+      <div class="stat o"><span>พระอาทิตย์ตก</span><b id="wsun">--:--</b><span id="wsa"></span></div>
+      <div class="stat"><span>โอกาสฝนวันนี้</span><b id="wr">--%</b><span id="wra"></span></div>
+    </div>
+    <div id="days"></div>
+  </div>
+</section>
+
+<section id="s-pack">
+  <div class="card">
+    <h2>จัดอุปกรณ์</h2><p class="sub">บันทึกในเครื่องอัตโนมัติ ใช้ออฟไลน์ได้</p>
+    <div class="pbar"><i id="pbar"></i></div>
+    <div class="row sub"><span id="pcnt" style="flex:1"></span><b id="ppct"></b></div>
+    <form onsubmit="addItem(event)" class="row" style="margin:10px 0"><input id="nitem" placeholder="เพิ่มอุปกรณ์ เช่น ไฟฉายคาดหัว" required><button class="btn b1">เพิ่ม</button></form>
+    <div class="chips"><button onclick="preset('car')">+ ชุด Car Camp</button><button onclick="preset('moto')">+ ชุด Moto Camp</button><button onclick="uncheck()">ติ๊กออกทั้งหมด</button><button onclick="clearAll()">ล้างทั้งหมด</button></div>
+    <div id="items"></div>
+  </div>
+</section>
+
+<section id="s-pw">
+  <div class="card">
+    <h2>คำนวณไฟ Power Station</h2><p class="sub">ประเมินเวลาใช้งาน (หักประสิทธิภาพ Inverter 15%)</p>
+    <div class="grid2" style="margin-top:10px">
+      <div><label>ความจุ (Wh)</label><input type="number" id="wh" value="512" inputmode="decimal" oninput="calc()"></div>
+      <div><label>กำลังรวม (W)</label><input type="number" id="wt2" value="0" inputmode="decimal" oninput="manual()"></div>
+    </div>
+    <p class="sub" style="margin-top:10px">แตะเพื่อเพิ่มอุปกรณ์ (แตะซ้ำ = เพิ่มจำนวน)</p>
+    <div class="chips" id="appl"></div>
+    <div class="row wrap"><span class="sub" id="plist" style="flex:1"></span><button class="btn b4" onclick="resetAppl()">ล้าง</button></div>
+  </div>
+  <div class="result"><span>ใช้งานต่อเนื่องได้ประมาณ</span><b id="pres">--</b><span id="pdet" class="sub" style="color:#cfe0c8"></span></div>
+</section>
+
+<section id="s-sos">
+  <div class="card sos">
+    <h2 style="color:#9a3412">SOS ฉุกเฉิน</h2><p class="sub">เสียง/ไฟกระพริบทำงานได้แม้ไม่มีเน็ต (GPS ต้องเปิดตำแหน่งในเครื่อง)</p>
+    <p class="sub" style="margin-top:10px">พิกัดของคุณ</p>
+    <p class="coord" id="scoord">กำลังหาตำแหน่ง...</p>
+    <div class="row wrap" style="margin:10px 0"><button class="btn b2" onclick="copyGPS()">คัดลอกพิกัดส่ง SMS</button><button class="btn b4" onclick="getGPS(true)">ค้นหาใหม่</button></div>
+    <p class="sub" id="stoast" style="color:var(--g);font-weight:600"></p>
+    <div class="grid2" style="margin-top:6px">
+      <button class="btn b2" id="bsnd" onclick="toggleSnd()">เปิดเสียง SOS</button>
+      <button class="btn b1" onclick="toggleFlash()">ไฟหน้าจอกระพริบ</button>
+    </div>
+  </div>
+  <div class="card">
+    <h2>เบอร์ฉุกเฉิน</h2>
+    <div class="day"><span>กู้ภัยอุทยานแห่งชาติ</span><a class="tag go" href="tel:1362">โทร 1362</a></div>
+    <div class="day"><span>เจ็บป่วยฉุกเฉิน / รถพยาบาล</span><a class="tag go" href="tel:1669">โทร 1669</a></div>
+    <div class="day"><span>ตำรวจท่องเที่ยว</span><a class="tag go" href="tel:1155">โทร 1155</a></div>
+    <div class="day"><span>เหตุด่วนเหตุร้าย</span><a class="tag go" href="tel:191">โทร 191</a></div>
+  </div>
+</section>
+</main>
+
+<nav>
+  <button class="on" data-t="camp" onclick="tab('camp')"><svg class="ic"><use href="#i-tent"/></svg>ลาน</button>
+  <button data-t="wx" onclick="tab('wx')"><svg class="ic"><use href="#i-sun"/></svg>อากาศ</button>
+  <button data-t="pack" onclick="tab('pack')"><svg class="ic"><use href="#i-list"/></svg>จัดของ</button>
+  <button data-t="pw" onclick="tab('pw')"><svg class="ic"><use href="#i-bolt"/></svg>คำนวณไฟ</button>
+  <button class="sosb" data-t="sos" onclick="tab('sos')"><svg class="ic"><use href="#i-alert"/></svg>SOS</button>
+</nav>
+
+<div class="banner" id="ubn"><p><b>มีเวอร์ชันใหม่พร้อมใช้งาน</b><br><span style="color:#cfe0c8;font-size:12px">กดอัปเดตเพื่อรับฟีเจอร์ล่าสุด</span></p><button class="btn b2" onclick="applyUpdate()">อัปเดต</button></div>
+<div class="banner" id="ibn"><p id="itxt"><b>ติดตั้งเป็นแอป</b><br><span style="color:#cfe0c8;font-size:12px">เปิดได้จากหน้าจอหลัก ใช้ออฟไลน์ได้</span></p><button class="btn b2" id="ibtn" onclick="doInstall()">ติดตั้ง</button><button class="btn" style="background:none;color:#cfe0c8;padding:8px" onclick="snoozeInstall()">ไว้ก่อน</button></div>
+
+<dialog id="menu">
+  <h2 style="margin-bottom:10px">เมนู</h2>
+  <button class="menuit" onclick="checkUpdate()"><svg class="ic"><use href="#i-ref"/></svg><span style="flex:1"><b>ตรวจสอบอัปเดต</b><br><span class="sub" id="ustat">เวอร์ชัน <span id="ver"></span></span></span></button>
+  <button class="menuit" id="minst" onclick="doInstall()"><svg class="ic"><use href="#i-dl"/></svg><span style="flex:1"><b>ติดตั้งแอปลงเครื่อง</b><br><span class="sub" id="istat">เปิดจากหน้าจอหลัก ใช้ออฟไลน์ได้</span></span></button>
+  <button class="menuit" onclick="openAdd()"><svg class="ic"><use href="#i-plus"/></svg><span><b>เพิ่มลานของฉัน</b><br><span class="sub">บันทึกที่เที่ยวที่คุณชอบ</span></span></button>
+  <button class="btn b4" style="width:100%" onclick="menu.close()">ปิด</button>
+</dialog>
+
+<dialog id="addd">
+  <h2 style="margin-bottom:10px">เพิ่มลานของฉัน</h2>
+  <form onsubmit="saveCamp(event)">
+    <label>ชื่อลาน</label><input id="an" required>
+    <div class="grid2" style="margin:8px 0"><div><label>จังหวัด</label><input id="ap" required></div><div><label>ค่าบริการ</label><input id="af" placeholder="เช่น 150 บาท/คืน"></div>
+    <div><label>ละติจูด</label><input id="alat" type="number" step="any" required></div><div><label>ลองจิจูด</label><input id="alng" type="number" step="any" required></div></div>
+    <button type="button" class="btn b3" style="width:100%;margin-bottom:8px" onclick="useHere()">ใช้ตำแหน่งปัจจุบัน</button>
+    <div class="row wrap" style="margin-bottom:12px"><label><input type="checkbox" id="a4" style="width:auto"> ต้องใช้ 4WD</label><label><input type="checkbox" id="ape" style="width:auto"> มีไฟ</label><label><input type="checkbox" id="apt" style="width:auto"> สัตว์เลี้ยงได้</label></div>
+    <div class="row"><button type="button" class="btn b4" style="flex:1" onclick="addd.close()">ยกเลิก</button><button class="btn b1" style="flex:1">บันทึก</button></div>
+  </form>
+</dialog>
+<div id="flash" onclick="toggleFlash()">แตะเพื่อหยุด</div>
+
+<script>
+const VER='3.0.0',$=id=>document.getElementById(id),ic=(n,c='')=>`<svg class="ic ${c}"><use href="#i-${n}"/></svg>`;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+$('ver').textContent=VER;
+let me={lat:14.5294,lng:101.3712,real:false};
+function tab(t){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id==='s-'+t));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));scrollTo(0,0)}
+
+/* GPS */
+function getGPS(manual){
+  if(!navigator.geolocation){$('gtxt').textContent='ไม่รองรับ GPS';return}
+  $('scoord').textContent='กำลังหาตำแหน่ง...';
+  navigator.geolocation.getCurrentPosition(p=>{me={lat:p.coords.latitude,lng:p.coords.longitude,real:true};$('gdot').className='dot ok';$('gtxt').textContent='GPS พร้อม';$('scoord').textContent=`${me.lat.toFixed(5)}, ${me.lng.toFixed(5)} (±${Math.round(p.coords.accuracy)} ม.)`;renderCamps();if(manual||!wxLoc)loadWx()},
+  ()=>{$('gdot').className='dot';$('gtxt').textContent='ไม่มี GPS';$('scoord').textContent='ไม่ได้รับตำแหน่ง โปรดเปิดการเข้าถึงตำแหน่ง';if(!wxLoc)loadWx()},{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+}
+function copyGPS(){if(!me.real){$('stoast').textContent='ยังไม่ได้ตำแหน่งจริง';return}
+  const t=`ขอความช่วยเหลือ! พิกัด ${me.lat.toFixed(5)},${me.lng.toFixed(5)} https://maps.google.com/?q=${me.lat},${me.lng}`;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>$('stoast').textContent='คัดลอกแล้ว วางใน SMS/LINE ได้เลย',()=>{$('stoast').textContent=t});setTimeout(()=>$('stoast').textContent='',6000)}
+
+/* Campsites */
+const base=[
+ {id:1,name:'ผากล้วยไม้ (อุทยานฯ เขาใหญ่)',province:'นครราชสีมา',lat:14.4372,lng:101.4031,signal:'AIS',vehicle:'Sedan',power:'yes',pet:'no',fee:'30 บาท/คน/คืน'},
+ {id:2,name:'เจ็ดคด-โป่งก้อนเส้า',province:'สระบุรี',lat:14.4842,lng:101.1448,signal:'ALL',vehicle:'Sedan',power:'yes',pet:'no',fee:'มีค่าบำรุงสถานที่'},
+ {id:3,name:'เขากระช่องลม ริมธารแคมป์',province:'นครนายก',lat:14.3168,lng:101.3025,signal:'TRUE',vehicle:'4WD',power:'no',pet:'yes',fee:'200 บาท/คน'},
+ {id:4,name:'แก่งกระจาน จุดกางเต็นท์ริมเขื่อน',province:'เพชรบุรี',lat:12.91,lng:99.638,signal:'AIS',vehicle:'Sedan',power:'yes',pet:'no',fee:'30 บาท/คน/คืน'}];
+let mine=ls.get('cm_mine',[]),favs=ls.get('cm_favs',[]),sortNear=true,favOnly=false;
+const km=(a,b,c,d)=>{const r=x=>x*Math.PI/180,h=Math.sin(r(c-a)/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(r(d-b)/2)**2;return 12742*Math.asin(Math.sqrt(h))};
+function toggleSort(){sortNear=!sortNear;$('sortb').textContent='เรียงตามระยะใกล้ฉัน: '+(sortNear?'เปิด':'ปิด');renderCamps()}
+function toggleFavOnly(){favOnly=!favOnly;$('favb').style.background=favOnly?'var(--sun)':'';renderCamps()}
+function fav(id){favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];ls.set('cm_favs',favs);renderCamps()}
+function renderCamps(){
+  const k=$('kw').value.toLowerCase(),s=$('fsig').value,v=$('fveh').value,p=$('fpow').value,t=$('fpet').value;
+  let l=[...base,...mine].filter(c=>(c.name+c.province).toLowerCase().includes(k)&&(s==='all'||c.signal===s)&&(v==='all'||c.vehicle===v)&&(p==='all'||c.power===p)&&(t==='all'||c.pet===t)&&(!favOnly||favs.includes(c.id)));
+  l.forEach(c=>c.d=km(me.lat,me.lng,c.lat,c.lng));
+  if(sortNear)l.sort((a,b)=>a.d-b.d);
+  $('cnt').textContent=`พบ ${l.length} ลาน`+(me.real?' · ระยะเป็นเส้นตรงจากตำแหน่งคุณ':'');
+  $('camps').innerHTML=l.length?l.map(c=>`<div class="card camp"><div class="ban">${ic('tent')}<span class="dist">${me.real?'~'+Math.round(c.d)+' กม.':'จ.'+esc(c.province)}</span><button class="fav ${favs.includes(c.id)?'on':''}" onclick="fav(${c.id})" aria-label="ชอบ">${ic('heart','sm')}</button></div>
+  <h3>${esc(c.name)}</h3><p class="sub">${ic('pin','sm')} จ.${esc(c.province)}${c.fee?' · '+esc(c.fee):''}</p>
+  <div class="row wrap" style="margin:8px 0 10px;gap:6px">${c.signal?`<span class="tag">สัญญาณ ${c.signal}</span>`:''}<span class="tag">${c.vehicle==='Sedan'?'รถเก๋งเข้าได้':'ต้อง 4WD'}</span><span class="tag">${c.power==='yes'?'มีจุดไฟ':'ไม่มีจุดไฟ'}</span><span class="tag">${c.pet==='yes'?'สัตว์เลี้ยงได้':'ห้ามสัตว์เลี้ยง'}</span></div>
+  <div class="row"><a class="btn b1" style="flex:1" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}">${ic('nav','sm')}นำทาง</a><button class="btn b3" onclick="wxFor(${c.lat},${c.lng},'${esc(c.name).replace(/'/g,'')}')">ดูอากาศ</button>${c.mine?`<button class="btn b4" onclick="delCamp(${c.id})" aria-label="ลบ">${ic('trash','sm')}</button>`:''}</div></div>`).join(''):'<p class="sub" style="text-align:center;padding:24px">ไม่พบลานที่ตรงกับตัวกรอง</p>'}
+function openAdd(){menu.close();addd.showModal()}
+function useHere(){if(me.real){$('alat').value=me.lat.toFixed(5);$('alng').value=me.lng.toFixed(5)}else getGPS()}
+function saveCamp(e){e.preventDefault();mine.push({id:Date.now(),mine:1,name:$('an').value.trim(),province:$('ap').value.trim(),fee:$('af').value.trim(),lat:+$('alat').value,lng:+$('alng').value,signal:'',vehicle:$('a4').checked?'4WD':'Sedan',power:$('ape').checked?'yes':'no',pet:$('apt').checked?'yes':'no'});ls.set('cm_mine',mine);e.target.reset();addd.close();tab('camp');renderCamps()}
+function delCamp(id){if(confirm('ลบลานนี้?')){mine=mine.filter(c=>c.id!==id);ls.set('cm_mine',mine);renderCamps()}}
+
+/* Weather (Open-Meteo) */
+let wxLoc=null;
+function wxFor(lat,lng,name){wxLoc={lat,lng,name};tab('wx');loadWx()}
+const hm=s=>s.slice(11,16),dn=d=>new Date(d).toLocaleDateString('th-TH',{weekday:'short',day:'numeric',month:'short'});
+async function loadWx(){
+  const L=wxLoc||me;$('wloc').textContent=wxLoc?'ลาน: '+wxLoc.name:(me.real?'ตำแหน่งปัจจุบันของคุณ':'พิกัดอ้างอิง (เขาใหญ่)');
+  try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${L.lat}&longitude=${L.lng}&current=temperature_2m,relative_humidity_2m,wind_gusts_10m&daily=sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_gusts_10m_max&timezone=auto&forecast_days=4`);
+    if(!r.ok)throw 0;const d=await r.json();d.t=Date.now();ls.set('cm_wx',d);showWx(d,false)}
+  catch(e){const c=ls.get('cm_wx');c?showWx(c,true):$('wupd').textContent='ออฟไลน์และยังไม่มีข้อมูลเก่า'}}
+function showWx(d,old){
+  const c=d.current,y=d.daily;$('wupd').textContent=(old?'ออฟไลน์ · ข้อมูลเมื่อ ':'อัปเดต ')+new Date(d.t).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+  $('wt').textContent=Math.round(c.temperature_2m)+'°C';$('wta').textContent=`ต่ำสุดวันนี้ ${Math.round(y.temperature_2m_min[0])}° `+(y.temperature_2m_min[0]<=18?'· เตรียมถุงนอนอุ่น':'· อากาศสบาย');
+  const g=Math.round(Math.max(c.wind_gusts_10m,0));$('ww').textContent=g+' km/h';$('wwa').textContent=g>=30?'ลมแรง ปักสมอเอียง 45° ผูกเชือกให้แน่น':g>=20?'ลมค่อนข้างแรง เช็กสมอบ่อยๆ':'ลมสงบ';
+  const sun=hm(y.sunset[0]);$('wsun').textContent=sun+' น.';const[h,m]=sun.split(':').map(Number),t=h*60+m-45;$('wsa').textContent=`ตั้งเต็นท์ให้เสร็จก่อน ${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+  const p=y.precipitation_probability_max[0];$('wr').textContent=p+'%';$('wra').textContent=p>=50?'มีฝน ขึงฟลายชีทและกันน้ำเข้า':p>=30?'อาจมีฝน เตรียมเสื้อกันฝน':'โอกาสฝนต่ำ';
+  $('days').innerHTML=y.time.map((t,i)=>`<div class="day"><span>${dn(t)}</span><span class="sub">${Math.round(y.temperature_2m_min[i])}–${Math.round(y.temperature_2m_max[i])}° · ฝน ${y.precipitation_probability_max[i]}% · ลม ${Math.round(y.wind_gusts_10m_max[i])}</span></div>`).join('')}
+
+/* Packing */
+const P={car:['เต็นท์กันน้ำ 3000mm+','ฟลายชีท + สมอบกบิดยาว','สายพ่วงไฟ 15-20 ม.','ถุงขยะ + ถุงใส่ผ้าเปียก','เตาแคมป์ + แก๊สกระป๋อง','Power Station','ชุดปฐมพยาบาล + ยากันยุง','ไฟฉายคาดหัว','น้ำดื่ม + น้ำใช้','ถ่านและที่จุดไฟ'],
+ moto:['เต็นท์น้ำหนักเบา','ถุงนอน Comfort 10-15°C','แผ่นรองนอนเป่าลม','เตาพับเล็ก + แก๊สซาลาเปา','เสื้อกันลม/เสื้อขนเป็ด','ไฟฉายคาดหัว','ชุดปฐมพยาบาล','พาวเวอร์แบงก์']};
+let items=ls.get('cm_pack',null)||P.car.map(text=>({text,on:false}));
+const sv=()=>{ls.set('cm_pack',items);rp()};
+function rp(){const n=items.filter(i=>i.on).length,t=items.length,p=t?Math.round(n/t*100):0;$('pbar').style.width=p+'%';$('pcnt').textContent=`เตรียมแล้ว ${n}/${t} รายการ`;$('ppct').textContent=p+'%';
+  $('items').innerHTML=items.map((i,x)=>`<div class="item ${i.on?'done':''}"><input type="checkbox" ${i.on?'checked':''} onchange="items[${x}].on=!items[${x}].on;sv()"><span>${esc(i.text)}</span><button onclick="items.splice(${x},1);sv()" aria-label="ลบ">${ic('trash','sm')}</button></div>`).join('')}
+function addItem(e){e.preventDefault();const v=$('nitem').value.trim();if(v){items.push({text:v,on:false});$('nitem').value='';sv()}}
+function preset(k){const have=new Set(items.map(i=>i.text));P[k].forEach(t=>{if(!have.has(t))items.push({text:t,on:false})});sv()}
+function uncheck(){items.forEach(i=>i.on=false);sv()}
+function clearAll(){if(confirm('ล้างรายการทั้งหมด?')){items=[];sv()}}
+
+/* Power */
+const A=[['พัดลมแคมป์',15],['ชาร์จมือถือ',20],['ไฟ LED',10],['ตู้เย็นพกพา',45],['โน้ตบุ๊ก',65],['หม้อหุงข้าวเล็ก',300],['กาต้มน้ำ',1000],['เครื่องทำความอุ่น',200]];
+let ap={};
+$('appl').innerHTML=A.map((a,i)=>`<button onclick="addA(${i})">${a[0]} ${a[1]}W</button>`).join('');
+function addA(i){ap[i]=(ap[i]||0)+1;$('wt2').value=Object.entries(ap).reduce((s,[k,q])=>s+A[k][1]*q,0);calc()}
+function resetAppl(){ap={};$('wt2').value=0;calc()}
+function manual(){ap={};calc()}
+function calc(){const wh=+$('wh').value||0,w=+$('wt2').value||0;
+  $('plist').textContent=Object.entries(ap).map(([k,q])=>`${A[k][0]}×${q}`).join(', ');
+  if(wh<=0||w<=0){$('pres').textContent='--';$('pdet').textContent='ใส่ความจุและกำลังไฟ';return}
+  const h=wh*.85/w;$('pres').textContent=h>=24?`${h.toFixed(1)} ชม. (~${(h/24).toFixed(1)} วัน)`:h>=1?`${h.toFixed(1)} ชั่วโมง`:`${Math.round(h*60)} นาที`;
+  $('pdet').textContent=` ใช้ไฟจริง ~${Math.round(w)}W จากแบต ${wh}Wh`}
+
+/* SOS */
+let ctx,snd=false,fl=false,lock=null;
+const sl=ms=>new Promise(r=>setTimeout(r,ms));
+function beep(ms){return new Promise(res=>{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=900;g.gain.value=.5;o.connect(g);g.connect(ctx.destination);o.start();setTimeout(()=>{o.stop();res()},ms)})}
+async function morse(){for(;snd;){for(const d of[150,400,150]){for(let i=0;i<3;i++){if(!snd)return;await beep(d);await sl(100)}await sl(300)}await sl(900)}}
+function toggleSnd(){snd=!snd;$('bsnd').textContent=snd?'หยุดเสียง SOS':'เปิดเสียง SOS';if(snd){if(ctx&&ctx.state==='suspended')ctx.resume();morse()}}
+async function toggleFlash(){fl=!fl;$('flash').style.display=fl?'flex':'none';try{if(fl){lock=await navigator.wakeLock?.request('screen')}else{lock?.release();lock=null}}catch(e){}}
+
+/* PWA: update + install */
+let reg=null,deferred=null,reloading=false;
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone;
+function showUpdate(){$('ubn').classList.add('show');$('ustat').innerHTML='<b style="color:var(--or)">มีเวอร์ชันใหม่ กดเพื่ออัปเดต</b>'}
+function applyUpdate(){if(reg&&reg.waiting)reg.waiting.postMessage('SKIP_WAITING');else location.reload()}
+async function checkUpdate(){const s=$('ustat');if(!reg){s.textContent='ยังใช้ตรวจอัปเดตไม่ได้ (ต้องเปิดผ่าน https)';return}
+  if(reg.waiting){applyUpdate();return}s.textContent='กำลังตรวจสอบ...';try{await reg.update()}catch(e){s.textContent='ตรวจไม่ได้ ออฟไลน์อยู่หรือไม่?';return}
+  setTimeout(()=>{if(!reg.waiting&&!reg.installing)s.innerHTML='เป็นเวอร์ชันล่าสุดแล้ว (v'+VER+')'},1800)}
+function track(w){w.addEventListener('statechange',()=>{if(w.state==='installed'&&navigator.serviceWorker.controller)showUpdate()})}
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').then(r=>{reg=r;if(r.waiting&&navigator.serviceWorker.controller)showUpdate();r.addEventListener('updatefound',()=>track(r.installing));
+    setInterval(()=>r.update().catch(()=>{}),30*60*1000)}).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!reloading){reloading=true;location.reload()}});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&reg)reg.update().catch(()=>{})})}
+function openMenu(){$('minst').style.display=standalone?'none':'flex';menu.showModal()}
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;maybeInstallBanner()});
+addEventListener('appinstalled',()=>{deferred=null;$('ibn').classList.remove('show');$('minst').style.display='none'});
+function maybeInstallBanner(){if(standalone||Date.now()<ls.get('cm_snooze',0))return;if(ios){$('itxt').innerHTML='<b>ติดตั้งบน iPhone</b><br><span style="color:#cfe0c8;font-size:12px">แตะ แชร์ แล้วเลือก “เพิ่มไปยังหน้าจอโฮม”</span>';$('ibtn').style.display='none'}
+  setTimeout(()=>$('ibn').classList.add('show'),2500)}
+function snoozeInstall(){ls.set('cm_snooze',Date.now()+3*864e5);$('ibn').classList.remove('show')}
+async function doInstall(){if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;$('ibn').classList.remove('show')}
+  else{menu.showModal();$('istat').textContent=ios?'iPhone: แตะปุ่มแชร์ แล้วเลือก “เพิ่มไปยังหน้าจอโฮม”':'เปิดเมนูเบราว์เซอร์ แล้วเลือก “ติดตั้งแอป / เพิ่มลงหน้าจอหลัก”'}}
+if(ios)maybeInstallBanner();
+
+addEventListener('online',()=>loadWx());
+renderCamps();rp();calc();getGPS();
+</script>
+</body>
+</html>

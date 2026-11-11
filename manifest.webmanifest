@@ -1,0 +1,17 @@
+{
+  "name": "CampMaster Pro",
+  "short_name": "CampMaster",
+  "description": "แอปสายแคมป์ปิ้ง: ลานกางเต็นท์ อากาศ จัดของ คำนวณไฟ SOS",
+  "lang": "th",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf7ec",
+  "theme_color": "#1f4d36",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
